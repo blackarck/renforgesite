@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#1E293B" />
+
+  <!-- Primary -->
+  <title>RenForge — Bulk file rename, with a preview you can trust</title>
+  <meta name="description"
+    content="RenForge is a preview-first bulk file rename utility. Filter, chain rename steps (regex, case, numbering, EXIF dates), preview every change, apply with confidence, and undo with one click. Built with Go + Fyne for macOS, Windows, and Linux." />
+  <meta name="keywords"
+    content="bulk rename, file rename, batch rename, rename utility, file renamer, rename photos by date, EXIF rename, regex rename, image sequence rename, Go, Fyne, macOS, Windows, Linux, RenForge" />
+  <meta name="author" content="blackarck" />
+  <meta name="application-name" content="RenForge" />
+  <meta name="generator" content="static" />
+
+  <!-- Crawling -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://renforgeapp.web.app/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="RenForge" />
+  <meta property="og:title" content="RenForge — Bulk file rename, with a preview you can trust" />
+  <meta property="og:description"
+    content="A preview-first bulk file rename utility with regex, numbering, photo-date templates, presets and one-click undo. Deterministic, offline, cross-platform. Built with Go + Fyne." />
+  <meta property="og:url" content="https://renforgeapp.web.app/" />
+  <meta property="og:image" content="https://renforgeapp.web.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="RenForge — preview-first bulk file renaming for macOS, Windows, Linux" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RenForge — Bulk file rename, with a preview you can trust" />
+  <meta name="twitter:description"
+    content="Preview-first bulk file rename utility: regex, EXIF date templates, presets, undo. macOS, Windows, Linux." />
+  <meta name="twitter:image" content="https://renforgeapp.web.app/og-image.png" />
+  <meta name="twitter:image:alt" content="RenForge — preview-first bulk file renaming" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="mask-icon" href="/favicon.svg" color="#1E293B" />
+
+  <!-- Structured data: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "RenForge",
+    "alternateName": "RenForge bulk file renamer",
+    "description": "Preview-first bulk file rename utility. Filter files, chain rename steps (regex, case, numbering, photo-date templates, frame shifts), preview every change, and apply with confidence, with one-click undo. Built with Go + Fyne.",
+    "applicationCategory": "UtilitiesApplication",
+    "applicationSubCategory": "File Manager",
+    "operatingSystem": "macOS, Windows, Linux",
+    "url": "https://renforgeapp.web.app/",
+    "downloadUrl": "https://github.com/blackarck/renforge/releases/latest",
+    "softwareHelp": "https://renforgeapp.web.app/docs.html",
+    "featureList": [
+      "Preview-first rename pipeline",
+      "Filters with AND/OR matching, including regular expressions",
+      "Regex replace, case conversion, clean-up and numbering steps",
+      "Rename photos from EXIF capture date, camera and lens",
+      "Image-sequence frame shifting",
+      "Sidecar and RAW+JPEG pairs renamed together",
+      "Saveable presets",
+      "Conflict and duplicate detection",
+      "Dry run mode",
+      "One-click undo from a CSV log",
+      "Fast on folders with tens of thousands of files",
+      "Deterministic, offline-first"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "blackarck",
+      "url": "https://github.com/blackarck"
+    },
+    "codeRepository": "https://github.com/blackarck/renforge",
+    "programmingLanguage": "Go",
+    "image": "https://renforgeapp.web.app/og-image.png"
+  }
+  </script>
+
+  <!-- Structured data: Organization / WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "RenForge",
+    "url": "https://renforgeapp.web.app/",
+    "description": "Bulk file rename utility with a preview-first workflow.",
+    "publisher": {
+      "@type": "Person",
+      "name": "blackarck",
+      "url": "https://github.com/blackarck"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- ============================ NAV ============================ -->
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="RenForge home">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <span class="name">RenForge</span>
+          <span class="tag">Preview. Decide. Rename.</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#quickstart">Quick start</a>
+        <a href="docs.html">Docs</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#support">Support</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="cta">
+        <a class="btn" id="repoLink" href="#" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.79.56 4.57-1.52 7.86-5.83 7.86-10.91C23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn primary" id="downloadBtn" href="#" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================ HERO ============================ -->
+  <header id="top">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow reveal">
+          <span class="dot"></span> macOS · Windows · Linux
+        </div>
+
+        <h1 class="title reveal">Bulk file renaming, with a preview you can trust.</h1>
+        <p class="subtitle reveal">
+          <strong>RenForge</strong> is a preview-first bulk rename utility. Filter your files, chain rename
+          steps (regex, case, numbering, photo dates), see every change before it happens, and apply with
+          confidence — with one-click undo so you can always step back.
+        </p>
+
+        <div class="hero-actions reveal">
+          <a class="btn primary" id="getReleaseBtn" href="#" target="_blank" rel="noopener">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download latest release
+          </a>
+          <a class="btn" href="docs.html">
+            Documentation
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a class="btn" href="#quickstart">
+            Quick start
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <div class="fineprint reveal">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Always previews first
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Deterministic rules
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            One-click undo <span class="kbd">.csv</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="preview reveal" aria-label="RenForge preview mock">
+        <div class="topbar">
+          <div class="lights" aria-hidden="true">
+            <span class="light l1"></span><span class="light l2"></span><span class="light l3"></span>
+          </div>
+          <div class="mini">
+            <span class="mono">renforge</span>
+            <span style="opacity:.5">·</span>
+            <span>Preview mode</span>
+          </div>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="left mono">IMG_2023-07-01 (copy).png</div>
+            <div class="arrow">→</div>
+            <div class="right mono">IMG_2023-07-01.png</div>
+          </div>
+          <div class="row">
+            <div class="left mono">invoice_final_FINAL_v7.pdf</div>
+            <div class="arrow">→</div>
+            <div class="right mono">invoice_final_v7.pdf</div>
+          </div>
+          <div class="row">
+            <div class="left mono">report (draft) 001.txt</div>
+            <div class="arrow">→</div>
+            <div class="right mono">report_001.txt</div>
+          </div>
+          <div class="row">
+            <div class="left mono">music - track 09.wav</div>
+            <div class="arrow">→</div>
+            <div class="right mono">music_track_09.wav</div>
+          </div>
+          <span class="badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Dry run · conflicts flagged · undo CSV ready
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================ FEATURES ============================ -->
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Features</div>
+          <h2 class="section-title">Built for cautious power users.</h2>
+          <p class="section-sub">
+            No "magic AI" guessing what you meant. Just clear rules, complete previews, and loud warnings
+            when something looks off.
+          </p>
+        </div>
+
+        <div class="grid3">
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Preview-first pipeline</h3>
+            <p>Stack rename steps and review the final result before anything touches the disk. If it looks wrong, nothing is applied.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            </div>
+            <h3>Filters that make sense</h3>
+            <p>Contains, starts with, ends with, extension, or regex — combined with Match ALL (AND) or Match ANY (OR), plus a case-sensitive toggle.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3>Safety checks</h3>
+            <p>Invalid characters, duplicate targets, and "file already exists" issues are flagged before you hit Apply. Swaps, case-only renames and frame shifts are handled safely, and nothing is ever overwritten.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </div>
+            <h3>Fast on big folders</h3>
+            <p>A scrolling preview and background scanning keep RenForge smooth with tens of thousands of files. Sort by name, date or size, and tick or untick any file.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><polyline points="3 4 3 12 11 12"/></svg>
+            </div>
+            <h3>One-click undo</h3>
+            <p>Save an undo log when you apply, then press <strong>Undo…</strong> any time later to restore the original names. Files that moved or changed since are reported, not guessed at.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Deterministic by design</h3>
+            <p>Same inputs produce the same outputs, every time. RenForge won't get creative when you just want consistency.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3>A full rename toolbox</h3>
+            <p>Replace, remove, prepend, append, change extension, <strong>regex replace</strong>, case conversion (snake_case, Title Case…), clean-up, and numbering. Reorder or switch off steps, and save setups as <strong>presets</strong>.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <h3>Made for photographers</h3>
+            <p>Name files from the <strong>EXIF capture date</strong>, camera, lens or ISO — <span class="mono">{date:YYYY-MM-DD}_{n:3}</span>. RAW + XMP + JPG companions are renamed together, all or none.</p>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3>Renders &amp; image sequences</h3>
+            <p>Shift frame numbers — <span class="mono">shot.0001.exr</span> → <span class="mono">shot.1001.exr</span> — even when each file takes the name of the next. Chains are applied safely, and undo restores them.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ QUICK START ============================ -->
+    <section id="quickstart" class="alt">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Quick start</div>
+          <h2 class="section-title">Up and running in under a minute.</h2>
+          <p class="section-sub">
+            Grab a prebuilt build from GitHub Releases, or build from source with Go. RenForge runs natively
+            on macOS (Apple Silicon and Intel), Windows, and Linux.
+          </p>
+        </div>
+
+        <div class="quickstart">
+          <div class="code-block reveal">
+            <div class="code-tabs" role="tablist">
+              <button class="code-tab active" data-tab="macos" role="tab">macOS</button>
+              <button class="code-tab" data-tab="linux" role="tab">Linux</button>
+              <button class="code-tab" data-tab="windows" role="tab">Windows</button>
+              <button class="code-tab" data-tab="source" role="tab">From source</button>
+            </div>
+            <div class="code-body">
+              <button class="copy-btn" id="copyBtn" aria-label="Copy to clipboard">Copy</button>
+
+              <div class="code-pane active" data-pane="macos">
+<pre><span class="comment"># Apple Silicon (M1 or newer); use renforge-macos-intel.zip on Intel Macs</span>
+<span class="prompt">$</span> <span class="cmd">curl -LO https://github.com/blackarck/renforge/releases/download/latest/renforge-macos-silicon.zip</span>
+<span class="prompt">$</span> <span class="cmd">unzip renforge-macos-silicon.zip</span>
+<span class="prompt">$</span> <span class="cmd">open renforge.app</span>
+<span class="comment"># Only if macOS says the app is from an unidentified developer:</span>
+<span class="prompt">$</span> <span class="cmd">xattr -dr com.apple.quarantine renforge.app</span></pre>
+              </div>
+
+              <div class="code-pane" data-pane="linux">
+<pre><span class="comment"># Download and unpack the Linux (x86-64) build</span>
+<span class="prompt">$</span> <span class="cmd">curl -LO https://github.com/blackarck/renforge/releases/download/latest/renforge-linux-amd64.tar.xz</span>
+<span class="prompt">$</span> <span class="cmd">tar -xJf renforge-linux-amd64.tar.xz</span>
+<span class="prompt">$</span> <span class="cmd">./renforge/usr/local/bin/renforge</span>
+<span class="comment"># To install it (menu entry and icon): cd renforge &amp;&amp; sudo make install</span></pre>
+              </div>
+
+              <div class="code-pane" data-pane="windows">
+<pre><span class="comment"># Download the Windows (x64) build and run it</span>
+<span class="prompt">PS&gt;</span> <span class="cmd">Invoke-WebRequest -Uri https://github.com/blackarck/renforge/releases/download/latest/renforge-windows-amd64.exe -OutFile renforge.exe</span>
+<span class="prompt">PS&gt;</span> <span class="cmd">.\renforge.exe</span>
+<span class="comment"># If SmartScreen warns: More info → Run anyway (Windows builds are not code-signed yet)</span></pre>
+              </div>
+
+              <div class="code-pane" data-pane="source">
+<pre><span class="comment"># Requires a recent Go (see go.mod) and the Fyne dependencies</span>
+<span class="prompt">$</span> <span class="cmd">git clone https://github.com/blackarck/renforge.git</span>
+<span class="prompt">$</span> <span class="cmd">cd renforge</span>
+<span class="prompt">$</span> <span class="cmd">go run .</span>
+<span class="comment"># Or build a packaged app with icon: go install fyne.io/tools/cmd/fyne@latest &amp;&amp; fyne package -os darwin</span></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="quickstart-info reveal">
+            <p style="margin-bottom:12px"><a href="docs.html#start"><strong>Your first rename, step by step →</strong></a> &nbsp;·&nbsp; <a href="docs.html#build">Build instructions →</a></p>
+            <h3>What you get</h3>
+            <p>A single, self-contained desktop app. No services running in the background, no telemetry, no account needed.</p>
+            <ul>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div><strong>Cross-platform.</strong> Native builds for macOS (Apple Silicon and Intel), Windows, and Linux, with built-in help (press F1).</div>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div><strong>Source on GitHub.</strong> Read the code, file issues, send PRs. Free for non-commercial use; a commercial license is available.</div>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div><strong>Built with Go + Fyne.</strong> Lightweight, fast, and easy to build from source.</div>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div><strong>Offline-first.</strong> No network calls. Photo metadata is only read, never changed, and your files stay on your machine.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SCREENSHOTS ============================ -->
+    <section id="screenshots">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Screenshots</div>
+          <h2 class="section-title">A look inside RenForge.</h2>
+          <p class="section-sub">Click any image to see it full-size.</p>
+        </div>
+
+        <div class="shots">
+          <div class="shot reveal" data-title="Preview pipeline" data-src="./assets/shot1.png">
+            <div class="thumb" style="background-image: url('./assets/shot1.png');"></div>
+            <div class="meta">
+              <p class="cap">Preview pipeline</p>
+              <p class="cap-sub">Chain rename steps; the changed part of every new name is highlighted.</p>
+            </div>
+          </div>
+          <div class="shot reveal" data-title="Filters with AND / OR" data-src="./assets/shot2.png">
+            <div class="thumb" style="background-image: url('./assets/shot2.png');"></div>
+            <div class="meta">
+              <p class="cap">Filters</p>
+              <p class="cap-sub">Combine contains, starts with, extension and regex rules with AND / OR.</p>
+            </div>
+          </div>
+          <div class="shot reveal" data-title="Conflicts and warnings" data-src="./assets/shot3.png">
+            <div class="thumb" style="background-image: url('./assets/shot3.png');"></div>
+            <div class="meta">
+              <p class="cap">Safety checks</p>
+              <p class="cap-sub">Invalid names, duplicates and taken names are counted and flagged before you apply.</p>
+            </div>
+          </div>
+          <div class="shot reveal" data-title="Confirm before anything changes" data-src="./assets/shot4.png">
+            <div class="thumb" style="background-image: url('./assets/shot4.png');"></div>
+            <div class="meta">
+              <p class="cap">Confirm &amp; apply</p>
+              <p class="cap-sub">A summary and a confirmation first. Dry Run is on by default, and every rename can be undone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ MANUAL ============================ -->
+    <section id="manual" class="alt">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">How it works</div>
+          <h2 class="section-title">Six steps, zero surprises.</h2>
+          <p class="section-sub">
+            RenForge follows one principle: <em>preview first, rename second.</em>
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="n">1</div>
+            <h4>Select a folder</h4>
+            <p>Pick a folder, or drag one onto the window. Subfolders are only included if you tick <em>Include subfolders</em> — fewer accidents.</p>
+          </div>
+
+          <div class="step reveal">
+            <div class="n">2</div>
+            <h4>Add filters</h4>
+            <p>Narrow the file list with contains / starts / ends / extension / regex rules. Combine with AND or OR.</p>
+          </div>
+
+          <div class="step reveal">
+            <div class="n">3</div>
+            <h4>Build a rename pipeline</h4>
+            <p>Stack steps: replace, remove, regex, prepend, append, change extension or case, clean up, number files, or build names from photo dates. Reorder them, or load a preset.</p>
+          </div>
+
+          <div class="step reveal">
+            <div class="n">4</div>
+            <h4>Review conflicts</h4>
+            <p>Duplicates, invalid characters, and existing-target collisions are highlighted before Apply.</p>
+          </div>
+
+          <div class="step reveal">
+            <div class="n">5</div>
+            <h4>Dry run, then apply</h4>
+            <p>Stay in Dry Run while you tune the pipeline. Switch to Apply only when the preview looks right.</p>
+          </div>
+
+          <div class="step reveal">
+            <div class="n">6</div>
+            <h4>Keep an undo log</h4>
+            <p>Optional, but recommended. Press <em>Undo…</em> later and RenForge restores the original names from the log.</p>
+          </div>
+        </div>
+
+        <div class="callout reveal">
+          <strong>Pro tip:</strong> if anything in the preview makes you pause, stay in <span class="kbd">Dry Run</span>
+          until the result is boringly correct. Boring is the goal. Every step above has examples in the <a href="docs.html">documentation</a>.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">FAQ</div>
+          <h2 class="section-title">Common questions.</h2>
+        </div>
+
+        <div class="faq">
+          <details class="reveal">
+            <summary>
+              What makes RenForge "safe"?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>It's preview-first and deterministic. Before applying, RenForge runs checks for invalid names, duplicate targets, and existing files. You see the full plan, then you decide.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Does it rename files recursively?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>Only if you ask it to. Tick <strong>Include subfolders</strong> to scan inside subfolders; it is off by default so a first run stays small and predictable. Numbering can restart in each folder.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Can I undo changes?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>Yes. Keep <em>Create undo log</em> ticked when you apply, then click <strong>Undo…</strong> in RenForge and pick the log (the latest is offered automatically). Files that were moved or deleted since are skipped and reported.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Where do I download binaries?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>The Download button at the top opens the latest build on GitHub Releases: <span class="mono">renforge-macos-silicon.zip</span>, <span class="mono">renforge-macos-intel.zip</span>, <span class="mono">renforge-windows-amd64.exe</span> and <span class="mono">renforge-linux-amd64.tar.xz</span>.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Is RenForge free? What's the license?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>RenForge is free for non-commercial use under CC BY-NC 4.0, and the source is on GitHub. Commercial use requires a paid license — contact the author via the repository.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Can it rename photos by the date they were taken?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>Yes. Use <strong>Rename from template</strong> with tokens such as <span class="mono">{date:YYYYMMDD_HHmmss}</span>, <span class="mono">{camera}</span> and <span class="mono">{n:3}</span>. The date comes from the photo's EXIF data (JPEG and TIFF-based RAW such as CR2, NEF, DNG, ARW); other files use their modified date. EXIF is only read, never changed.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Does it keep RAW, XMP and JPG files together?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>Yes, if you tick <strong>Also rename related files</strong>. Files with the same base name (or Adobe-style <span class="mono">IMG_001.CR2.xmp</span> sidecars) are renamed together, and a group is renamed all or nothing.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Are the downloads signed?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>macOS builds are being signed and notarized by Apple. Windows builds are not code-signed yet, so SmartScreen may warn: choose <em>More info → Run anyway</em>.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              How do I report a bug or ask for a feature?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>Open an issue on GitHub and pick the Bug report or Feature request form. See <a href="#support">Project &amp; support</a> for what to include, or the <a href="docs.html">documentation</a> if you are not sure how something works.</p>
+          </details>
+
+          <details class="reveal">
+            <summary>
+              Does it send any data anywhere?
+              <span class="chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <p>No. RenForge is a local desktop app with no telemetry, no analytics, and no network calls. Your filenames and photos stay on your machine.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SUPPORT / CONTRIBUTE ============================ -->
+    <section id="support" class="alt">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Project &amp; support</div>
+          <h2 class="section-title">Found a bug? Want to help?</h2>
+          <p class="section-sub">
+            RenForge lives on GitHub. Bug reports, ideas and pull requests are all welcome, and the
+            more concrete your example file names are, the faster things move.
+          </p>
+        </div>
+
+        <div class="repo-strip reveal">
+          <div class="repo-name">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.79.56 4.57-1.52 7.86-5.83 7.86-10.91C23.5 5.65 18.35.5 12 .5z"/></svg>
+            <div>
+              github.com/blackarck/renforge
+              <span>Source code, releases, issues and pull requests · Go + Fyne</span>
+            </div>
+          </div>
+          <div class="repo-links">
+            <a class="btn primary" href="https://github.com/blackarck/renforge" target="_blank" rel="noopener">View repository</a>
+            <a class="btn" href="https://github.com/blackarck/renforge/releases/tag/latest" target="_blank" rel="noopener">Releases</a>
+            <a class="btn" href="https://github.com/blackarck/renforge/issues" target="_blank" rel="noopener">Issues</a>
+            <a class="btn" href="https://github.com/blackarck/renforge/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing guide</a>
+          </div>
+        </div>
+
+        <div class="support-grid">
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>
+            </div>
+            <h3>Report a bug</h3>
+            <p>Open an issue and tell us:</p>
+            <ul>
+              <li>your operating system and which build you downloaded</li>
+              <li>a few example file names, your filters and rename steps</li>
+              <li>what you expected and what happened</li>
+              <li>a screenshot, or the undo log (remove private names first)</li>
+            </ul>
+            <a class="btn primary" href="https://github.com/blackarck/renforge/issues/new/choose" target="_blank" rel="noopener">Open a bug report</a>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg>
+            </div>
+            <h3>Request a feature</h3>
+            <p>Describe the problem you are trying to solve first (for example "number photos separately in each folder"), then your idea. Before → after file names make requests easy to act on.</p>
+            <a class="btn" href="https://github.com/blackarck/renforge/issues/new/choose" target="_blank" rel="noopener">Request a feature</a>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
+            </div>
+            <h3>Contribute code</h3>
+            <ul>
+              <li><strong>Fork</strong> the repository and create a branch</li>
+              <li>Keep the change <strong>small and focused</strong>; open an issue first for big ideas</li>
+              <li>Add <strong>tests</strong> (the rename engine in <span class="mono">internal/</span> has no UI code)</li>
+              <li>Run <span class="mono">gofmt</span>, <span class="mono">go vet ./...</span>, <span class="mono">go test ./...</span></li>
+              <li>Update the docs, then open a <strong>pull request</strong></li>
+            </ul>
+            <a class="btn" href="https://github.com/blackarck/renforge/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Read the contributing guide</a>
+          </div>
+
+          <div class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3>Build it yourself</h3>
+            <p>You need Go and a C compiler (for the Fyne UI toolkit).</p>
+<pre class="mono" style="background:#0F172A;color:#E2E8F0;border-radius:8px;padding:12px 14px;overflow:auto;margin:0 0 14px;line-height:1.7">git clone https://github.com/blackarck/renforge.git
+cd renforge
+go run .          # run
+go test ./...     # test</pre>
+            <a class="btn" href="docs.html#build">Full build instructions</a>
+          </div>
+        </div>
+
+        <div class="callout reveal">
+          <strong>Other ways to help:</strong> star the repository, share RenForge with someone who renames a lot of files,
+          improve the <a href="docs.html">documentation</a>, or send example folders (with private names removed) that RenForge handles badly.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CTA STRIP ============================ -->
+    <section style="border-top: none; padding-top: 24px;">
+      <div class="wrap">
+        <div class="cta-strip reveal">
+          <h2>Ready to rename without the regret?</h2>
+          <p>Download RenForge, run a dry run on a test folder, and see the preview-first workflow for yourself.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+            <a class="btn" id="getReleaseBtn2" href="#" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download latest release
+            </a>
+            <a class="btn outline" id="repoLink2" href="#" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.79.56 4.57-1.52 7.86-5.83 7.86-10.91C23.5 5.65 18.35.5 12 .5z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer>
+    <div class="wrap foot">
+      <div class="foot-brand">
+        <div class="logo" aria-hidden="true" style="width:28px; height:28px;"></div>
+        <div>
+          <div class="name">RenForge</div>
+          <div class="desc">Preview-first bulk file renaming. Built with Go + Fyne.</div>
+        </div>
+      </div>
+
+      <div class="links">
+        <a id="repoLink3" href="#" target="_blank" rel="noopener">GitHub</a>
+        <a id="releasesLink" href="#" target="_blank" rel="noopener">Releases</a>
+        <a id="issuesLink" href="#" target="_blank" rel="noopener">Issues</a>
+        <a href="docs.html">Documentation</a>
+        <a href="#support">Support</a>
+        <a href="#manual">How it works</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong id="modalTitle">Screenshot</strong>
+        <button class="x" id="modalClose" aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="imgbox" id="imgbox">
+          <div class="hint">Add real screenshots and set the card's <code>data-src</code>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://renforgeapp.web.app/</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://renforgeapp.web.app/og-image.png</image:loc>
+      <image:title>RenForge — Bulk file rename, with a preview you can trust</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://renforgeapp.web.app/assets/shot1.png</image:loc>
+      <image:title>RenForge preview pipeline</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://renforgeapp.web.app/assets/shot2.png</image:loc>
+      <image:title>RenForge filters with AND/OR and regex</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://renforgeapp.web.app/assets/shot3.png</image:loc>
+      <image:title>RenForge problem summary: invalid, duplicate and taken names</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://renforgeapp.web.app/assets/shot4.png</image:loc>
+      <image:title>RenForge confirm and apply dialog</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/docs.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/#features</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/#quickstart</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/#screenshots</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/#manual</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/#support</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://renforgeapp.web.app/#faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

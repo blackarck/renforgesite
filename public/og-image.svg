@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F1F3F6"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- subtle grid -->
+  <g opacity="0.06" stroke="#0B1220" stroke-width="1">
+    <path d="M0 100 H1200 M0 200 H1200 M0 300 H1200 M0 400 H1200 M0 500 H1200"/>
+    <path d="M100 0 V630 M200 0 V630 M300 0 V630 M400 0 V630 M500 0 V630 M600 0 V630 M700 0 V630 M800 0 V630 M900 0 V630 M1000 0 V630 M1100 0 V630"/>
+  </g>
+
+  <!-- Logo mark -->
+  <g transform="translate(96, 96)">
+    <rect width="84" height="84" rx="18" fill="url(#accent)"/>
+    <path d="M24 24 H48 a10 10 0 0 1 10 10 v0 a10 10 0 0 1 -10 10 H34 l22 16" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="155" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="700" font-size="42" fill="#0B1220" letter-spacing="-1">RenForge</text>
+
+  <!-- Headline -->
+  <text x="96" y="290" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="700" font-size="64" fill="#0B1220" letter-spacing="-1.5">Bulk file renaming,</text>
+  <text x="96" y="370" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="700" font-size="64" fill="#334155" letter-spacing="-1.5">with a preview you can trust.</text>
+
+  <!-- Subheadline -->
+  <text x="96" y="440" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="400" font-size="26" fill="#4B5563">Open-source · Preview-first · macOS · Windows · Linux</text>
+
+  <!-- Pills -->
+  <g transform="translate(96, 490)">
+    <rect width="180" height="50" rx="25" fill="#E6EAF0"/>
+    <text x="90" y="32" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="18" fill="#334155">Go + Fyne</text>
+  </g>
+  <g transform="translate(296, 490)">
+    <rect width="200" height="50" rx="25" fill="#E6EAF0"/>
+    <text x="100" y="32" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="18" fill="#334155">Deterministic</text>
+  </g>
+  <g transform="translate(516, 490)">
+    <rect width="180" height="50" rx="25" fill="#E6EAF0"/>
+    <text x="90" y="32" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="18" fill="#334155">Undo log</text>
+  </g>
+</svg>

@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#1E293B" />
+
+  <title>RenForge Documentation — filters, rename steps, templates, presets and undo</title>
+  <meta name="description"
+    content="How to use RenForge, with examples: filters, rename steps, regex, numbering, EXIF photo templates, image sequences, sidecar files, presets, dry run and undo. Plus how to build it from source." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://renforgeapp.web.app/docs.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="RenForge" />
+  <meta property="og:title" content="RenForge Documentation" />
+  <meta property="og:description" content="Guides and examples for every RenForge feature, and how to build it from source." />
+  <meta property="og:url" content="https://renforgeapp.web.app/docs.html" />
+  <meta property="og:image" content="https://renforgeapp.web.app/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "RenForge Documentation",
+    "description": "How to use RenForge with examples, and how to build it from source.",
+    "url": "https://renforgeapp.web.app/docs.html",
+    "author": { "@type": "Person", "name": "blackarck", "url": "https://github.com/blackarck" },
+    "about": { "@type": "SoftwareApplication", "name": "RenForge", "url": "https://renforgeapp.web.app/" }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/" aria-label="RenForge home">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <span class="name">RenForge</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/#quickstart">Quick start</a>
+        <a class="current" href="/docs.html">Docs</a>
+        <a href="/#support">Support</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+
+      <div class="cta">
+        <a class="btn" id="repoLink" href="#" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.79.56 4.57-1.52 7.86-5.83 7.86-10.91C23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn primary" id="downloadBtn" href="#" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap docs-hero">
+    <div class="section-eyebrow">Documentation</div>
+    <h1>Learn RenForge by example.</h1>
+    <p>Everything the app can do, with before &amp; after file names you can copy. The same guide is built into the app: press <span class="kbd">F1</span> or click <strong>Help</strong>.</p>
+  </div>
+
+  <div class="wrap docs">
+    <aside class="docs-nav" id="docsNav" aria-label="Documentation sections">
+      <h5>Start</h5>
+      <a href="#start">Your first rename</a>
+      <a href="#interface">The window</a>
+      <h5>Choose files</h5>
+      <a href="#filters">Filters</a>
+      <a href="#selecting">Selecting &amp; sorting</a>
+      <h5>Rename</h5>
+      <a href="#steps">Rename steps</a>
+      <a href="#numbering">Numbering</a>
+      <a href="#regex">Regex</a>
+      <a href="#photos">Photos &amp; EXIF dates</a>
+      <a href="#related">Related files (XMP, JPG)</a>
+      <a href="#sequences">Image sequences</a>
+      <a href="#presets">Presets</a>
+      <h5>Apply safely</h5>
+      <a href="#safety">Dry run &amp; safety checks</a>
+      <a href="#undo">Undo</a>
+      <h5>More</h5>
+      <a href="#recipes">Recipes</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#build">Build from source</a>
+      <a href="/#support">Report a bug / contribute</a>
+    </aside>
+
+    <main class="docs-content">
+
+      <!-- ===================== START ===================== -->
+      <section id="start">
+        <h2>Your first rename</h2>
+        <p>Goal: turn camera names into holiday names. The folder contains <code>IMG_0042.JPG</code>, <code>IMG_0043.JPG</code>, <code>IMG_0044.JPG</code> and a few <code>.txt</code> notes you want to leave alone.</p>
+        <ol>
+          <li>Click <strong>Select Folder…</strong> (or drag the folder onto the window).</li>
+          <li>Under <strong>1. Filters</strong>, click <strong>+ Add filter</strong>, choose <code>extension</code> and type <code>jpg</code>. Only the photos remain in the list.</li>
+          <li>Under <strong>2. Rename steps</strong>, click <strong>+ Add rename step</strong>. Choose <em>Replace text</em>: find <code>IMG_</code>, replace with <code>Holiday_</code>.</li>
+          <li>Add a second step, <em>Change case</em> → <code>lowercase extension</code>.</li>
+          <li>Check the preview. Untick any file you want to skip.</li>
+          <li>Click <strong>Apply</strong> with <em>Dry run</em> ticked (the default). RenForge only reports what it <em>would</em> do.</li>
+          <li>Happy? Untick <em>Dry run</em> and click <strong>Apply</strong> again. Keep <em>Create undo log</em> ticked.</li>
+        </ol>
+        <div class="example">
+          <div class="ex-title">Result</div>
+          <div class="row"><div class="left mono">IMG_0042.JPG</div><div class="arrow">→</div><div class="right mono">Holiday_0042.jpg</div></div>
+          <div class="row"><div class="left mono">IMG_0043.JPG</div><div class="arrow">→</div><div class="right mono">Holiday_0043.jpg</div></div>
+          <div class="row"><div class="left mono">IMG_0044.JPG</div><div class="arrow">→</div><div class="right mono">Holiday_0044.jpg</div></div>
+        </div>
+        <div class="callout"><strong>Tip:</strong> try RenForge on a copy of a few files first. With <em>Dry run</em> on, nothing is ever changed.</div>
+      </section>
+
+      <!-- ===================== INTERFACE ===================== -->
+      <section id="interface">
+        <h2>The window</h2>
+        <table class="doc">
+          <tr><th>Area</th><th>What it does</th></tr>
+          <tr><td><strong>Top bar</strong></td><td><em>Select Folder…</em>, <em>Recent…</em> (last 5 folders), <em>Refresh</em>, <em>Include subfolders</em>, <strong>A− / A+</strong> (text size), <strong>Auto / Light / Dark</strong> (colours), <em>Help</em>, <em>About</em>. You can also drag a folder onto the window. Window size, text size and colour mode are remembered.</td></tr>
+          <tr><td><strong>1. Filters</strong></td><td>Choose <em>which</em> files are affected (optional).</td></tr>
+          <tr><td><strong>2. Rename steps</strong></td><td>Describe <em>how</em> names change. Each step has a checkbox (on/off), ▲ ▼ (reorder), ✕ (remove) and <strong>Presets…</strong></td></tr>
+          <tr><td><strong>3. Options</strong></td><td><em>Also rename related files</em> (sidecars, RAW+JPEG pairs); <em>Edit file types…</em> opens the list of extensions.</td></tr>
+          <tr><td><strong>Preview (right)</strong></td><td>Original name next to the new name (the <em>changed part is highlighted</em>), a checkbox per file and ⚠ warnings. <em>Order</em> sorts the list; drag the divider in the column header to resize the columns. A summary line shows what will rename, what is invalid, duplicated or taken, and what stays unchanged; click a problem count to see just those files.</td></tr>
+          <tr><td><strong>Bottom bar</strong></td><td><em>Dry run</em>, <em>Create undo log</em>, <strong>Undo…</strong> and <strong>Apply</strong>.</td></tr>
+        </table>
+      </section>
+
+      <!-- ===================== FILTERS ===================== -->
+      <section id="filters">
+        <h2>Filters</h2>
+        <p>Filters decide which files appear in the preview. With no filters every file in the folder is included. A filter with an empty value is ignored, and only the file <em>name</em> is checked, never the folder path.</p>
+        <table class="doc">
+          <tr><th>Mode</th><th>Matches when…</th><th>Example value</th></tr>
+          <tr><td>contains</td><td>the name contains the text</td><td><code>holiday</code></td></tr>
+          <tr><td>starts with</td><td>the name begins with the text</td><td><code>IMG_</code></td></tr>
+          <tr><td>ends with</td><td>the name ends with the text (extension included)</td><td><code>_edit.jpg</code></td></tr>
+          <tr><td>extension</td><td>the extension equals the value</td><td><code>png</code>, <code>.png</code>, <code>tar.gz</code></td></tr>
+          <tr><td>regex</td><td>the name matches a <a href="#regex">regular expression</a></td><td><code>^IMG_\d{4}\.jpe?g$</code></td></tr>
+        </table>
+        <ul>
+          <li><strong>Match ALL (AND)</strong>: a file must satisfy every filter. <strong>Match ANY (OR)</strong>: at least one.</li>
+          <li><strong>Case sensitive</strong> is off by default, so <code>PNG</code> and <code>png</code> are the same.</li>
+          <li>An invalid regular expression is flagged in red and matches nothing.</li>
+        </ul>
+        <div class="example">
+          <div class="ex-title">Example: only photos that start with IMG_</div>
+          <p class="setup">Filters: <code>starts with</code> <code>IMG_</code> AND <code>extension</code> <code>jpg</code></p>
+          <div class="row"><div class="left mono">IMG_0042.jpg</div><div class="arrow">✓</div><div class="right mono">listed</div></div>
+          <div class="row"><div class="left mono">IMG_0042.png</div><div class="arrow">✗</div><div class="right mono">hidden (wrong extension)</div></div>
+          <div class="row"><div class="left mono">holiday.jpg</div><div class="arrow">✗</div><div class="right mono">hidden (does not start with IMG_)</div></div>
+        </div>
+      </section>
+
+      <!-- ===================== SELECTING ===================== -->
+      <section id="selecting">
+        <h2>Selecting &amp; sorting</h2>
+        <ul>
+          <li>Every matching file has a checkbox. Untick files to leave them alone. <strong>Select All</strong> / <strong>Deselect All</strong> act on the files currently listed.</li>
+          <li><strong>Show: All / Changed / Problems</strong> narrows the preview. <em>Changed</em> hides unchanged and unticked files; <em>Problems</em> shows only files with a ⚠ (invalid name, duplicate name, or a name already taken by a file that is not being renamed). The buttons show live counts, and <em>Problems</em> turns amber when something needs fixing.</li>
+          <li>The header shows the counts, for example <code>42 matches · 38 selected · 100 total files</code>.</li>
+          <li>The list scrolls smoothly even with tens of thousands of files, and folders are scanned in the background.</li>
+          <li><strong>Order</strong> sorts by name (natural: <code>img2</code> before <code>img10</code>), date (capture date, else modified) or size. Numbering follows the order shown.</li>
+          <li>Rows marked <code>(unchanged)</code> already have the target name and are skipped.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== STEPS ===================== -->
+      <section id="steps">
+        <h2>Rename steps</h2>
+        <p>Steps form a pipeline: the result of step 1 is the input of step 2, and so on. Use ▲ ▼ to reorder, the checkbox to switch a step off without deleting it, and ✕ to remove it. Order matters: <em>Prepend</em> then <em>Change case</em> is not the same as the reverse. Each step shows an <strong>Example</strong> line (the first selected file, before → after that step), and the arrow button collapses a step to one line.</p>
+
+        <h3>Replace text &amp; Remove text</h3>
+        <p><em>Replace</em> swaps every occurrence of <strong>A</strong> for <strong>B</strong> (leave B empty to delete). <em>Remove</em> deletes the text. Matching is case sensitive.</p>
+        <div class="example">
+          <div class="ex-title">Replace  A = _   B = (a space)</div>
+          <div class="row"><div class="left mono">my_holiday_photo.jpg</div><div class="arrow">→</div><div class="right mono">my holiday photo.jpg</div></div>
+          <div class="ex-title" style="margin-top:12px">Remove  text = IMG_</div>
+          <div class="row"><div class="left mono">IMG_0042.jpg</div><div class="arrow">→</div><div class="right mono">0042.jpg</div></div>
+        </div>
+
+        <h3>Prepend, Append &amp; Insert before extension</h3>
+        <div class="example">
+          <div class="ex-title">Prepend  2024_</div>
+          <div class="row"><div class="left mono">beach.jpg</div><div class="arrow">→</div><div class="right mono">2024_beach.jpg</div></div>
+          <div class="ex-title" style="margin-top:12px">Insert before extension  _final  (Append does the same)</div>
+          <div class="row"><div class="left mono">cut.mp4</div><div class="arrow">→</div><div class="right mono">cut_final.mp4</div></div>
+          <div class="row"><div class="left mono">backup.tar.gz</div><div class="arrow">→</div><div class="right mono">backup_final.tar.gz</div></div>
+        </div>
+
+        <h3>Change extension</h3>
+        <p>With or without the dot; empty removes the extension. <code>.tar.gz</code>, <code>.tar.bz2</code>, <code>.tar.xz</code> and <code>.tar.zst</code> count as one extension, and dotfiles such as <code>.bashrc</code> have none.</p>
+        <div class="example">
+          <div class="ex-title">Change extension  png</div>
+          <div class="row"><div class="left mono">a.jpeg</div><div class="arrow">→</div><div class="right mono">a.png</div></div>
+        </div>
+
+        <h3>Change case</h3>
+        <p>Changes the case of the name; the extension is untouched unless you pick an <em>extension</em> option.</p>
+        <table class="doc">
+          <tr><th>Option</th><th>Before</th><th>After</th></tr>
+          <tr><td>lowercase</td><td><code>My FILE.TXT</code></td><td><code>my file.TXT</code></td></tr>
+          <tr><td>UPPERCASE</td><td><code>my file.txt</code></td><td><code>MY FILE.txt</code></td></tr>
+          <tr><td>Title Case</td><td><code>the don't STOP-me_now.mp3</code></td><td><code>The Don't Stop-Me_Now.mp3</code></td></tr>
+          <tr><td>Sentence case</td><td><code>hELLO wORLD.txt</code></td><td><code>Hello world.txt</code></td></tr>
+          <tr><td>snake_case</td><td><code>My Great-Photo (final).JPG</code></td><td><code>my_great_photo_final.JPG</code></td></tr>
+          <tr><td>kebab-case</td><td><code>My Great Photo.jpg</code></td><td><code>my-great-photo.jpg</code></td></tr>
+          <tr><td>lowercase extension</td><td><code>A.JPG</code></td><td><code>A.jpg</code></td></tr>
+          <tr><td>UPPERCASE extension</td><td><code>a.jpg</code></td><td><code>a.JPG</code></td></tr>
+        </table>
+
+        <h3>Clean up</h3>
+        <table class="doc">
+          <tr><th>Option</th><th>Before</th><th>After</th></tr>
+          <tr><td>Collapse repeated spaces</td><td><code>a&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;c.txt</code></td><td><code>a b c.txt</code></td></tr>
+          <tr><td>Trim spaces around name</td><td><code>&nbsp;&nbsp;a b&nbsp;&nbsp;.txt</code></td><td><code>a b.txt</code></td></tr>
+          <tr><td>Remove accents</td><td><code>Café Crème.txt</code></td><td><code>Cafe Creme.txt</code></td></tr>
+          <tr><td>Dots and underscores to spaces</td><td><code>My.Cool_Song.mp3</code></td><td><code>My Cool Song.mp3</code></td></tr>
+          <tr><td>Remove copy markers</td><td><code>report (2).pdf</code>, <code>report - Copy.pdf</code>, <code>Copy of report.pdf</code></td><td><code>report.pdf</code></td></tr>
+        </table>
+        <div class="callout"><strong>Note:</strong> RenForge never trims spaces for you. A result that starts or ends with a space is flagged as invalid so you notice it. A red message under a step means a setting is wrong (for example an invalid regex); the preview skips that step until it is fixed.</div>
+      </section>
+
+      <!-- ===================== NUMBERING ===================== -->
+      <section id="numbering">
+        <h2>Numbering</h2>
+        <p><strong>Number files</strong> gives every <em>selected</em> file a sequence number, in the order shown. Untick a file and the others are renumbered.</p>
+        <ul>
+          <li><strong>A (template)</strong>: <code>{n}</code> = number, <code>{n:3}</code> = padded to 3 digits, <code>{name}</code> = original name without extension. The extension is kept automatically. Empty means <code>{name}_{n:3}</code>.</li>
+          <li><strong>B (start, step)</strong>: <code>1</code> starts at 1; <code>100,10</code> gives 100, 110, 120…</li>
+          <li>Tick <strong>Restart numbering in each folder</strong> when <em>Include subfolders</em> is on and each folder should start again.</li>
+        </ul>
+        <div class="example">
+          <div class="ex-title">Template  Trip_{n:4}   start  1</div>
+          <div class="row"><div class="left mono">DSC_9981.jpg</div><div class="arrow">→</div><div class="right mono">Trip_0001.jpg</div></div>
+          <div class="row"><div class="left mono">DSC_9985.jpg</div><div class="arrow">→</div><div class="right mono">Trip_0002.jpg</div></div>
+          <div class="row"><div class="left mono">DSC_9990.jpg</div><div class="arrow">→</div><div class="right mono">Trip_0003.jpg</div></div>
+          <div class="ex-title" style="margin-top:12px">Template  {n:2}-{name}   start,step  10,5</div>
+          <div class="row"><div class="left mono">beach.jpg</div><div class="arrow">→</div><div class="right mono">10-beach.jpg</div></div>
+          <div class="row"><div class="left mono">forest.jpg</div><div class="arrow">→</div><div class="right mono">15-forest.jpg</div></div>
+        </div>
+      </section>
+
+      <!-- ===================== REGEX ===================== -->
+      <section id="regex">
+        <h2>Regex</h2>
+        <p>A regular expression (regex) describes a pattern. In <strong>Regex replace</strong>, <strong>A</strong> is the pattern and <strong>B</strong> the replacement; <code>$1</code>, <code>$2</code>… insert the parts captured by brackets. The whole name, extension included, is matched. Start the pattern with <code>(?i)</code> to ignore case. The <strong>regex</strong> filter uses the same syntax and follows the <em>Case sensitive</em> box. The syntax is Go's <a href="https://github.com/google/re2/wiki/Syntax" target="_blank" rel="noopener">RE2</a>.</p>
+        <table class="doc">
+          <tr><th>Pattern (A)</th><th>Replacement (B)</th><th>Before → after</th></tr>
+          <tr><td><code>IMG_(\d+)</code></td><td><code>Holiday-$1</code></td><td><code>IMG_0042.jpg</code> → <code>Holiday-0042.jpg</code></td></tr>
+          <tr><td><code>\s+</code></td><td><code>_</code></td><td><code>my&nbsp;&nbsp;file.txt</code> → <code>my_file.txt</code></td></tr>
+          <tr><td><code>^(\d{4})-(\d{2})-(\d{2})</code></td><td><code>$3.$2.$1</code></td><td><code>2024-06-01_x.jpg</code> → <code>01.06.2024_x.jpg</code></td></tr>
+          <tr><td><code>\[.*?\]</code></td><td><em>(empty)</em></td><td><code>a [1080p] b.mp4</code> → <code>a  b.mp4</code></td></tr>
+          <tr><td><code>(?i)\.jpe?g$</code></td><td><code>.jpg</code></td><td><code>pic.JPEG</code> → <code>pic.jpg</code></td></tr>
+        </table>
+        <p>Tip: follow a regex that leaves double spaces with <em>Clean up → Collapse repeated spaces</em>.</p>
+      </section>
+
+      <!-- ===================== PHOTOS ===================== -->
+      <section id="photos">
+        <h2>Photos &amp; EXIF dates</h2>
+        <p><strong>Rename from template</strong> builds the whole name from tokens. The <strong>capture date</strong> is read from the EXIF data inside the picture (JPEG and TIFF-based RAW formats such as CR2, NEF, DNG, ARW). Files without EXIF (and HEIC/CR3, whose metadata RenForge cannot read yet) use their <em>modified</em> date, so the template still works. EXIF is only read, never written.</p>
+        <table class="doc">
+          <tr><th>Token</th><th>Meaning</th></tr>
+          <tr><td><code>{date}</code> / <code>{date:YYYY-MM-DD_HHmmss}</code></td><td>capture date; format letters <code>YYYY YY MM DD HH mm ss</code> (default <code>YYYY-MM-DD</code>)</td></tr>
+          <tr><td><code>{modified}</code> / <code>{modified:YYYY}</code></td><td>file modification date, same format letters</td></tr>
+          <tr><td><code>{n}</code> / <code>{n:3}</code></td><td>sequence number, padded to 3 digits</td></tr>
+          <tr><td><code>{name}</code></td><td>original name without extension</td></tr>
+          <tr><td><code>{parent}</code></td><td>name of the folder the file is in</td></tr>
+          <tr><td><code>{camera}</code> <code>{make}</code> <code>{lens}</code> <code>{iso}</code></td><td>from EXIF (shows <code>unknown</code> when missing)</td></tr>
+        </table>
+        <div class="example">
+          <div class="ex-title">Template  {date:YYYY-MM-DD}_{n:3}   order  Date, oldest first</div>
+          <p class="setup">Photos taken on 1 June 2024, in this order:</p>
+          <div class="row"><div class="left mono">IMG_4021.CR2</div><div class="arrow">→</div><div class="right mono">2024-06-01_001.CR2</div></div>
+          <div class="row"><div class="left mono">IMG_4020.CR2</div><div class="arrow">→</div><div class="right mono">2024-06-01_002.CR2</div></div>
+          <div class="ex-title" style="margin-top:12px">Template  {date:YYYYMMDD_HHmmss}_{camera}</div>
+          <div class="row"><div class="left mono">IMG_4021.CR2</div><div class="arrow">→</div><div class="right mono">20240601_140509_EOS R5.CR2</div></div>
+        </div>
+        <div class="callout"><strong>Tip:</strong> keep <code>{n}</code> in the template when several photos can share a second (bursts, two cameras). RenForge warns when it is missing. Reading dates for a large folder happens in the background; a progress bar appears above the list and the preview fills in when it is done.</div>
+      </section>
+
+      <!-- ===================== RELATED ===================== -->
+      <section id="related">
+        <h2>Related files (XMP, JPG pairs)</h2>
+        <p>Under <strong>3. Options</strong>, tick <em>Also rename related files</em>. For every file that gets a new base name, RenForge also renames files next to it that have the same base name and another extension from your list (default <code>xmp, aae, dop, pp3, jpg, jpeg, tif, tiff, png, heic, cr2, cr3, nef, arw, dng, raf, orf, rw2, mov, thm</code>), or are Adobe-style sidecars of the full name (<code>IMG_001.CR2.xmp</code>).</p>
+        <div class="example">
+          <div class="ex-title">Filter: extension cr2   Step: Prepend  Trip_</div>
+          <div class="row"><div class="left mono">IMG_001.CR2</div><div class="arrow">→</div><div class="right mono">Trip_IMG_001.CR2</div></div>
+          <div class="row"><div class="left mono">IMG_001.xmp</div><div class="arrow">→</div><div class="right mono">Trip_IMG_001.xmp</div></div>
+          <div class="row"><div class="left mono">IMG_001.CR2.xmp</div><div class="arrow">→</div><div class="right mono">Trip_IMG_001.CR2.xmp</div></div>
+          <div class="row"><div class="left mono">IMG_001.JPG</div><div class="arrow">→</div><div class="right mono">Trip_IMG_001.JPG</div></div>
+        </div>
+        <ul>
+          <li>The preview shows <code>(+3 related)</code> on the main file.</li>
+          <li>A group is <strong>all or nothing</strong>: if any member would conflict, none of that group is renamed.</li>
+          <li>Changing only the extension leaves related files alone.</li>
+          <li>Related files come from the folders that were scanned; tick <em>Include subfolders</em> if they live deeper.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== SEQUENCES ===================== -->
+      <section id="sequences">
+        <h2>Image sequences</h2>
+        <p><strong>Shift frame numbers</strong> adds an offset to the number at the end of the name. <strong>A</strong> is the offset (<code>+1000</code>, <code>-1</code>), <strong>B</strong> an optional padding (empty keeps the current width). Only the last number changes.</p>
+        <div class="example">
+          <div class="ex-title">Offset +1000</div>
+          <div class="row"><div class="left mono">shot.0001.exr</div><div class="arrow">→</div><div class="right mono">shot.1001.exr</div></div>
+          <div class="row"><div class="left mono">shot.0240.exr</div><div class="arrow">→</div><div class="right mono">shot.1240.exr</div></div>
+          <div class="ex-title" style="margin-top:12px">Offset +1 (each file takes the name of the next)</div>
+          <div class="row"><div class="left mono">shot_0099.exr</div><div class="arrow">→</div><div class="right mono">shot_0100.exr</div></div>
+          <div class="ex-title" style="margin-top:12px">Offset -41</div>
+          <div class="row"><div class="left mono">shot.0042.exr</div><div class="arrow">→</div><div class="right mono">shot.0001.exr</div></div>
+        </div>
+        <p>Shifts such as <code>+1</code> are fine: RenForge moves all files out of the way first. If a file that is <em>not</em> part of the batch occupies a target, the whole affected chain is skipped and reported, so nothing is half-shifted. <a href="#undo">Undo</a> restores such shifts too. A frame that would become negative is left unchanged.</p>
+      </section>
+
+      <!-- ===================== PRESETS ===================== -->
+      <section id="presets">
+        <h2>Presets</h2>
+        <p>Click <strong>Presets…</strong> (next to <em>+ Add rename step</em>):</p>
+        <ul>
+          <li><strong>Load</strong> a built-in or your own preset. Loading replaces the current filters and steps.</li>
+          <li><strong>Save current as…</strong> stores your filters, steps and match options under a name (saving under an existing name asks before replacing it).</li>
+          <li><strong>Delete</strong> removes your own presets; built-ins cannot be deleted.</li>
+        </ul>
+        <table class="doc">
+          <tr><th>Built-in preset</th><th>Example</th></tr>
+          <tr><td>Clean up downloads</td><td><code>My.Cool_Song  (1).MP3</code> → <code>My Cool Song.MP3</code></td></tr>
+          <tr><td>Lowercase names and extensions</td><td><code>HOLIDAY.JPG</code> → <code>holiday.jpg</code></td></tr>
+          <tr><td>kebab-case names</td><td><code>My Great Photo.JPG</code> → <code>my-great-photo.jpg</code></td></tr>
+          <tr><td>Photos: Trip_0001</td><td><code>DSC_9981.jpg</code> → <code>Trip_0001.jpg</code></td></tr>
+          <tr><td>Photos by date</td><td><code>IMG_4021.CR2</code> → <code>2024-06-01_001.CR2</code></td></tr>
+          <tr><td>Photos by date and time</td><td><code>IMG_4021.CR2</code> → <code>20240601_140509_01.CR2</code></td></tr>
+          <tr><td>Image sequence: start at frame 1001</td><td><code>shot.0001.exr</code> → <code>shot.1001.exr</code></td></tr>
+          <tr><td>Add number suffix</td><td><code>beach.jpg</code> → <code>beach_001.jpg</code></td></tr>
+        </table>
+        <p>Your presets are plain JSON files in <code>renforge/presets</code> inside your user configuration folder (macOS <code>~/Library/Application Support</code>, Windows <code>%AppData%</code>, Linux <code>~/.config</code>). Copy them to another computer to share them.</p>
+      </section>
+
+      <!-- ===================== SAFETY ===================== -->
+      <section id="safety">
+        <h2>Dry run &amp; safety checks</h2>
+        <p>When you click <strong>Apply</strong>, RenForge checks every selected file and skips any that would cause trouble. <strong>Dry run</strong> is ticked by default and changes nothing.</p>
+        <table class="doc">
+          <tr><th>Problem</th><th>Meaning</th></tr>
+          <tr><td><strong>Invalid name</strong></td><td>Empty; contains <code>\ / : * ? " &lt; &gt; |</code> or control characters; starts with a space; ends with a space or dot; longer than 255 bytes; or a reserved Windows name (<code>CON</code>, <code>NUL</code>, <code>COM1</code>…). These rules keep files usable on every system.</td></tr>
+          <tr><td><strong>Conflict</strong></td><td>Two selected files in the same folder would get the same name.</td></tr>
+          <tr><td><strong>Target exists</strong></td><td>A different file that is <em>not</em> being renamed already has the new name. (A target held by a file that is itself being renamed away, as in <code>+1</code> frame shifts or swaps, is fine.)</td></tr>
+        </table>
+        <p><strong>Allowed:</strong> swapping names (<code>a.txt</code> ↔ <code>b.txt</code>), and changing only the letter case (<code>IMG.jpg</code> → <code>img.jpg</code>), even on Windows and macOS where names are case-insensitive.</p>
+        <p><strong>How it renames:</strong> each file first moves to a temporary name (<code>.renforge_tmp_…</code>), then to its final name. Existing files are never overwritten. If a file cannot be renamed it goes back to its old name; in the very unlikely case that fails too, the result dialog lists the file left under its temporary name.</p>
+      </section>
+
+      <!-- ===================== UNDO ===================== -->
+      <section id="undo">
+        <h2>Undo</h2>
+        <p>Keep <strong>Create undo log (CSV)</strong> ticked. RenForge asks where to save the log (it suggests the folder you are working in) and writes it <em>after</em> the rename, so it records what really happened.</p>
+        <ol>
+          <li>Click <strong>Undo…</strong>. RenForge offers the most recent log, or lets you choose any log file.</li>
+          <li>It shows how many renames can be restored and lists any it cannot: <em>not found</em> (moved or deleted since) or <em>in use again</em> (another file now has the original name).</li>
+          <li>Confirm, and the original names come back.</li>
+        </ol>
+        <p>A log from a dry run contains no completed renames, so there is nothing to undo. The CSV has the columns <code>old_path, new_path, old_name, new_name, status, reason</code> and opens in any spreadsheet.</p>
+      </section>
+
+      <!-- ===================== RECIPES ===================== -->
+      <section id="recipes">
+        <h2>Recipes</h2>
+        <table class="doc">
+          <tr><th>I want to…</th><th>Filters</th><th>Steps</th></tr>
+          <tr><td>Replace underscores with spaces</td><td>–</td><td>Replace <code>_</code> → (space)</td></tr>
+          <tr><td>Remove “ (1)” copies</td><td>contains <code> (1)</code></td><td>Clean up → Remove copy markers</td></tr>
+          <tr><td>Add a date prefix</td><td>–</td><td>Prepend <code>2024-06-01_</code></td></tr>
+          <tr><td>Mark finals</td><td>extension <code>mp4</code></td><td>Insert before extension <code>_final</code></td></tr>
+          <tr><td>Convert <code>.jpeg</code> to <code>.jpg</code></td><td>extension <code>jpeg</code></td><td>Change extension <code>jpg</code></td></tr>
+          <tr><td>Strip a download-site tag</td><td>contains <code>[site.com]</code></td><td>Remove text <code>[site.com]</code></td></tr>
+          <tr><td>Lower-case every extension</td><td>–</td><td>Change case → lowercase extension</td></tr>
+          <tr><td>Name photos by date</td><td>extension <code>jpg</code> (order: Date, oldest first)</td><td>Rename from template <code>{date:YYYY-MM-DD}_{n:3}</code></td></tr>
+          <tr><td>Keep RAW + XMP + JPG together</td><td>extension <code>cr2</code>, option <em>related files</em> on</td><td>any step, for example Prepend <code>Trip_</code></td></tr>
+          <tr><td>Start a render sequence at 1001</td><td>extension <code>exr</code></td><td>Shift frame numbers <code>+1000</code></td></tr>
+          <tr><td>kebab-case everything</td><td>–</td><td>Change case → kebab-case</td></tr>
+        </table>
+      </section>
+
+      <!-- ===================== TROUBLESHOOTING ===================== -->
+      <section id="troubleshooting">
+        <h2>Troubleshooting</h2>
+        <table class="doc">
+          <tr><th>Problem</th><th>What to do</th></tr>
+          <tr><td>The preview is empty</td><td>Check that a folder is selected and the filters are not too strict. Tick <em>Include subfolders</em> if the files are inside sub-folders.</td></tr>
+          <tr><td>⚠ conflict</td><td>Two files would get the same name. Make the name more unique (add <code>{n}</code>) or untick a file.</td></tr>
+          <tr><td>⚠ target exists</td><td>A file with the new name is already in that folder. Rename or move it first.</td></tr>
+          <tr><td>Files changed in another program</td><td>Click <strong>Refresh</strong>.</td></tr>
+          <tr><td>“Cannot undo”</td><td>The files in the log were moved, deleted or renamed again. Nothing was changed.</td></tr>
+          <tr><td>A <code>.renforge_tmp_…</code> file is left</td><td>Only after a failed rename that also could not be restored. The result dialog names the file; rename it by hand (the undo log has its original name).</td></tr>
+          <tr><td>macOS: “cannot be opened”</td><td>If the build is not notarized, run <code>xattr -dr com.apple.quarantine renforge.app</code>.</td></tr>
+          <tr><td>Windows: SmartScreen warning</td><td>Windows builds are not code-signed yet: <em>More info → Run anyway</em>.</td></tr>
+        </table>
+        <p>Still stuck? <a href="/#support">Report a bug</a> with your OS, the build you used, and the steps to reproduce.</p>
+      </section>
+
+      <!-- ===================== BUILD ===================== -->
+      <section id="build">
+        <h2>Build from source</h2>
+        <h3>Prerequisites</h3>
+        <ul>
+          <li><strong>Go</strong>: the version listed in <code>go.mod</code> (or newer) from <a href="https://go.dev/dl/" target="_blank" rel="noopener">go.dev/dl</a>.</li>
+          <li>A <strong>C compiler and graphics libraries</strong>, because the UI toolkit (<a href="https://developer.fyne.io/started/" target="_blank" rel="noopener">Fyne</a>) needs them:
+            <ul>
+              <li><strong>macOS</strong>: Xcode command line tools: <code>xcode-select --install</code></li>
+              <li><strong>Windows</strong>: MinGW-w64 gcc, for example via <a href="https://www.msys2.org/" target="_blank" rel="noopener">MSYS2</a></li>
+              <li><strong>Linux (Debian/Ubuntu)</strong>: <code>sudo apt install gcc pkg-config libgl1-mesa-dev xorg-dev libasound2-dev</code></li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Run, test and build</h3>
+        <div class="code-block"><div class="code-body"><pre><span class="comment"># get the code</span>
+<span class="prompt">$</span> git clone https://github.com/blackarck/renforge.git
+<span class="prompt">$</span> cd renforge
+
+<span class="comment"># run the app</span>
+<span class="prompt">$</span> go run .
+
+<span class="comment"># run the tests (the rename engine is UI-free and well covered)</span>
+<span class="prompt">$</span> go test ./...
+
+<span class="comment"># build a plain binary</span>
+<span class="prompt">$</span> go build -o renforge .</pre></div></div>
+        <p>A plain <code>go build</code> has no application icon, and on Windows it opens a console window. For a proper app, use the Fyne packager; it reads <code>FyneApp.toml</code> and <code>icon.png</code>:</p>
+        <div class="code-block"><div class="code-body"><pre><span class="prompt">$</span> go install fyne.io/tools/cmd/fyne@latest
+<span class="prompt">$</span> fyne package -os darwin     <span class="comment"># renforge.app</span>
+<span class="prompt">$</span> fyne package -os windows    <span class="comment"># renforge.exe, no console window</span>
+<span class="prompt">$</span> fyne package -os linux      <span class="comment"># renforge.tar.xz</span></pre></div></div>
+
+        <h3>Project layout</h3>
+        <table class="doc">
+          <tr><th>Path</th><th>Contains</th></tr>
+          <tr><td><code>renforge.go</code>, <code>rows.go</code>, <code>presets.go</code>, <code>help.go</code>, <code>icon.go</code></td><td>The Fyne user interface, in-app help and window icon</td></tr>
+          <tr><td><code>internal/rename</code></td><td>Rename steps, name validation, plan building, sidecars, two-phase apply</td></tr>
+          <tr><td><code>internal/filter</code></td><td>Filter rules</td></tr>
+          <tr><td><code>internal/undo</code></td><td>Undo log (CSV) reading, writing and reverting</td></tr>
+          <tr><td><code>internal/meta</code></td><td>Cached file size, dates and EXIF</td></tr>
+          <tr><td><code>internal/preset</code></td><td>Saved and built-in presets</td></tr>
+          <tr><td><code>docs/</code></td><td>User guide, release and signing notes</td></tr>
+        </table>
+        <p>Want to help? Read <a href="https://github.com/blackarck/renforge/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a> or jump to <a href="/#support">how to support the project</a>.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="foot-brand">
+        <div class="logo" aria-hidden="true" style="width:28px; height:28px;"></div>
+        <div>
+          <div class="name">RenForge</div>
+          <div class="desc">Preview-first bulk file renaming. Built with Go + Fyne.</div>
+        </div>
+      </div>
+      <div class="links">
+        <a href="/">Home</a>
+        <a id="repoLink3" href="#" target="_blank" rel="noopener">GitHub</a>
+        <a id="releasesLink" href="#" target="_blank" rel="noopener">Releases</a>
+        <a id="issuesLink" href="#" target="_blank" rel="noopener">Issues</a>
+        <a href="#start">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // highlight the current section in the sidebar
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('#docsNav a[href^="#"]'));
+      var map = {};
+      links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+      var sections = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+      if (!('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove('active'); });
+            if (map[e.target.id]) map[e.target.id].classList.add('active');
+          }
+        });
+      }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+      sections.forEach(function (s) { io.observe(s); });
+    })();
+  </script>
+</body>
+
+</html>
